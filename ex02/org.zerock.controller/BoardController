@@ -1,0 +1,76 @@
+package org.zerock.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.domain.BoardVO;
+import org.zerock.service.BoardService;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+@RequestMapping("/board/*")
+//BoardController는 BoardService에 의존적이므로 @AllArgsConstructor를 이용해서 생성자를 만들고 자동으로 주입해준다. 
+@AllArgsConstructor 
+public class BoardController {
+	
+	private BoardService service;
+	
+	//1. 게시물 목록 처리
+	@GetMapping("/list")
+	//list() 는 나중에 게시물의 목록을 전달해야하므로 Model을 파라미터로 지정한다. 
+	public void list(Model model) {
+		log.info("list");
+		model.addAttribute("list", service.getList());
+	}
+	
+	//2. 게시물 등록 처리 
+	@PostMapping("/register")
+	//RedirectAttributes를 파라미터로 지정한 이유: 등록 작업이 끝난 후 다시 목록 화면으로 이동하기 위함인데,
+	//추가적으로 새롭게 등록된 게시물의 번호를 같이 전달하기 위해서 RedirectAttributes를 이용한다. 
+	public String register(BoardVO board, RedirectAttributes rttr) {
+		log.info("register:"+board);
+		service.register(board);
+		rttr.addFlashAttribute("result", board.getBno());
+		return "redirect:/board/list";
+	}
+	
+	
+	//3. 게시물 조회 처리 
+	@GetMapping("/get")
+	public void get(@RequestParam("bno") Long bno, Model model) {
+		log.info("/get");
+		model.addAttribute("board", service.get(bno));
+	}
+	
+	
+	//4. 게시물 수정 처리 
+	@PostMapping("/modify")
+	public String modify(BoardVO board, RedirectAttributes rttr) {
+		log.info("/modify" +board);
+		
+		// 수정에 성공한 경우에만 RedirectAttributes에 추가  
+		if (service.modify(board)) {
+			rttr.addFlashAttribute("result", "sucess");
+		}
+		return "redirect:/board/list";
+		
+	}
+	
+	//5. 게시물 삭제 처리 
+	@PostMapping("/remove")
+	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr ) {
+		log.info("remove...." + bno);
+		if(service.remove(bno)) {
+			rttr.addFlashAttribute("result", "sucess");
+		}
+		return "redirect:/board/list";
+	}
+
+}

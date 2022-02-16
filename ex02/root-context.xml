@@ -29,5 +29,11 @@
 	</bean>
 	
 	<mybatis-spring:scan base-package="org.zerock.mapper"/>
+	
+	<!-- 	비즈니스 계층의 인터페이스와 구현 클래스가 작성되었다면, 
+	이를 스프링의 빈으로 인식하기 위해서 @Service 어노테이션이 있는 org.zerock.service 패키지를 스캔하도록 추가해야한다.  -->
+	
+	<context:component-scan base-package="org.zerock.service">
+	</context:component-scan>
 		
 </beans>

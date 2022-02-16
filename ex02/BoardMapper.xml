@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<!-- 1. XML을 작성할 때는 반드시 <mapper>의 namespace 속성값을 Mapper 인터페이스와 동일한 이름으로 준다.  -->
+<!-- 2. select 태그의 id 속성값은 Mapper 인터페이스의 메서드의 이름과 일치하게 작성한다.   -->
+<!-- 3. resultType 속성의 값은 select 쿼리의 결과를 특정 클래스의 객체로 만들기 위해서 설정한다.  -->
+
+<mapper namespace="org.zerock.mapper.BoardMapper">
+
+<select id="getList" resultType="org.zerock.domain.BoardVO">
+<![CDATA[
+select * from tbl_board where bno > 0
+]]>
+</select>
+
+<insert id="insert">
+	insert into tbl_board (bno,title,content,writer)
+	values (seq_board.nextval,#{title},#{content},#{writer})
+</insert>
+
+<insert id="insertSelectKey">
+
+	<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+	select seq_board.nextval from dual
+	</selectKey>
+	
+	insert into tbl_board (bno,title,content,writer)
+	values (#{bno},#{title},#{content},#{writer})	
+</insert>
+
+<select id="read" resultType="org.zerock.domain.BoardVO">
+	select * from tbl_board where bno = #{bno}
+</select>
+
+<delete id="delete">
+	delete tbl_board where bno = #{bno}
+</delete>
+
+<update id="update">
+	update tbl_board
+	set title = #{title},
+	content = #{content},
+	writer = #{writer},
+	updateDate = sysdate
+	where bno = #{bno}
+</update>
+
+</mapper>	

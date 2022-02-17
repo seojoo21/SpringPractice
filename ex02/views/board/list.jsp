@@ -118,4 +118,3 @@
 </script>                
 <!-- 게시판이 들어갈 핵심적인 페이지의 내용의 아래 부분을 잘라서 footer.jsp의 내용으로 처리한다.  -->
 <%@include file="../includes/footer.jsp" %>              
-              

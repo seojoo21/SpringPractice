@@ -76,6 +76,7 @@ public class BoardController {
 	
 	//6. 게시물 입력 페이지로 이동 
 	//게시물 등록 작업은 POST 방식으로 처리하지만, 화면에서 입력을 받아야 하므로 GET방식으로 입력 페이지를 볼 수 있도록 한다. 
+	//GET방식으로 연결한 register()는 입력 페이지를 보여주는 역할만을 하기 때문에 별도의 처리가 필요하지 않다.
 	@GetMapping("/register")
 	public void register() {
 		

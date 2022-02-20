@@ -4,6 +4,7 @@ import java.util.List;
 
 // import org.apache.ibatis.annotations.Select; // @Select 애노테이션을 가지고 오기 위한 myBatis의 import구문  
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 
 // MyBatis의 SQL을 처리하기 위해 Mapper 인터페이스와 Mapper XML을 만들어 MyBatis가 SQL을 처리하도록 한다. 
 
@@ -34,5 +35,11 @@ public interface BoardMapper {
 
 //	5. 특정 게시물을 수정한다. (Update)
 	public int update(BoardVO board);
-
+	
+//	6. 게시판 페이징 처리를 위해 org.zerock.domain 패키지 내에 Criteria 클래스를 반환 타입으로 사용하여 게시물 전체를 읽어오는 메서드를 추가한다. 	
+//	위의 1번 getList()의 변형이라고 할 수 있다.  
+	public List<BoardVO> getListWithPaging(Criteria cri);
+	
+//	7. 전체 데이터 개수 개수를 구한다. 
+	public int getTotalCount(Criteria cri);
 }

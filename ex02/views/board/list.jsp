@@ -1,49 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!-- 게시판이 들어갈 핵심적인 페이지의 내용 부분 위까지를 잘라서 header.jsp의 내용으로 처리한다.  -->
-<%@include file="../includes/header.jsp" %>
-            <div id="layoutSidenav_content">
-                <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4">Tables</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Tables</li>
-                        </ol>
-	            <!--         필요하면 사용해도 되는 것이니 이 부분은 일단 주석 처리 해놓음 
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
-                                <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
-                            </div>
-                        </div> -->
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                Board List Page
-                            </div>
-                            
-                           	<!-- 게시물 등록 버튼  -->
-                           	<button id='regBtn' type="button" class="btn btn-xs pull-right">게시물 등록</button>
-                            
-                            <div class="card-body">
-                            
-                            <!-- 테이블 시작  -->
-                               <table class="table table-striped table-bordered table-hover">
-                               	<thead>
-									<tr>
-										<th>#번호</th>
-										<th>제목</th>
-										<th>작성자</th>
-										<th>작성일</th>
-										<th>수정일</th>
-									</tr>                                   	
-                               	</thead>
-                               	
-                               	<c:forEach items="${list}" var="board">
+<%@include file="../includes/header.jsp"%>
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">Tables</h1>
+	</div>
+	<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Board List Page
+				
+				<!-- 게시물 등록 버튼  -->
+				<button id='regBtn' type="button" class="btn btn-xs pull-right">Register
+					New Board</button>
+					
+			</div>
+
+			<!-- /.panel-heading -->
+			<div class="panel-body">
+				
+				<!-- 테이블 시작  -->
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>#번호</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>작성일</th>
+							<th>수정일</th>
+						</tr>
+					</thead>
+
+						<c:forEach items="${list}" var="board">
                                		<tr>
                                			<td><c:out value="${board.bno }"/></td>
                                			<td><a href='/board/get?bno=<c:out value="${board.bno }"/>'><c:out value="${board.title }"/></a></td>
@@ -54,6 +51,11 @@
                                	</c:forEach>
                                </table>
                                <!-- 테이블 끝  -->
+
+<!-- 페이지 처리 태그 추가  -->                                        
+                               
+
+<!-- 페이지 처리 태그 끝  -->      
                                
 				       <!-- Modal  추가 -->
 							<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -78,11 +80,16 @@
 								<!-- /.modal-dialog -->
 							</div>
 							<!-- /.modal -->
+							
+							
+							
+							<div class='row'></div>
                             
                             </div>
                         </div>
                     </div>
-                </main>
+                </div>
+        
 
 <!-- 모달창을 보여주는 작업을 위한 jQuery    -->
 <script type="text/javascript">
@@ -118,3 +125,4 @@
 </script>                
 <!-- 게시판이 들어갈 핵심적인 페이지의 내용의 아래 부분을 잘라서 footer.jsp의 내용으로 처리한다.  -->
 <%@include file="../includes/footer.jsp" %>              
+              

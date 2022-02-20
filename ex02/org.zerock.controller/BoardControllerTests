@@ -1,7 +1,5 @@
 package org.zerock.controller;
 
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.queryParam;
-
 // Tomcat을 실행하지 않고 스프링와 웹URL을 테스트할 수 있는 코드를 앞으로 "codes for test: "라고 표시하겠음. 
 import org.junit.Before;
 import org.junit.Test;
@@ -97,4 +95,18 @@ public class BoardControllerTests {
 		log.info(resultPage);
 	}
 	
+	//6. 게시물 페이징 처리에 대한 테스트
+	@Test
+	public void testListPaging() throws Exception {
+		log.info(
+				// codes for test:
+				mockMvc.perform(MockMvcRequestBuilders.get("/board/list")
+						.param("pageNum", "2")
+						.param("amount", "50"))
+				.andReturn()
+				.getModelAndView()
+				.getModelMap());
+	}
+	
 }
+

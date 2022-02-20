@@ -1,6 +1,7 @@
 package org.zerock.service;
 
 import static org.junit.Assert.assertNotNull;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -43,7 +45,11 @@ public class BoardServiceTests {
 	// 목록(리스트)가 잘 불려오는지 확인하는 작업 
 	@Test
 	public void testGetList() {
-		service.getList().forEach(board -> log.info(board));
+		// 1. getList() 페이징 처리 전 테스트 코드 
+		// service.getList().forEach(board -> log.info(board));
+		// 2. getList() 페이징 처리 후 테스트 코드
+		service.getList(new Criteria(2,10)).forEach(board -> log.info(board));
+		
 	}
 
 	// 특정 게시물이 잘 불려오는지 확인하는 작업 (게시물의 번호인 VNO가 파라미터이며, 테스트에서는 VNO=1로 확인) 

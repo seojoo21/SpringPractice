@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 import org.zerock.mapper.BoardMapper;
 
 import lombok.AllArgsConstructor;
@@ -50,10 +51,25 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	// 모든 게시물 조회 
+//	@Override
+//	public List<BoardVO> getList() {
+//		log.info("getList.........");
+//		return mapper.getList();
+//	}
+
+	// 모든 게시물 조회 (페이징 처리 포함) 
 	@Override
-	public List<BoardVO> getList() {
-		log.info("getList.........");
-		return mapper.getList();
+	public List<BoardVO> getList(Criteria cri) {
+		log.info("get List with Criteria: " + cri);
+		return mapper.getListWithPaging(cri);
 	}
+
+	// 전체 데이터 개수 확인 
+	@Override
+	public int getTotal(Criteria cri) {
+		log.info("get total count");
+		return mapper.getTotalCount(cri);
+	}
+
 
 }

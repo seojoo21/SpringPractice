@@ -60,7 +60,7 @@
                 <!-- 검색 처리를 위해 검색 조건과 키워드 입력을 위한 폼 시작 -->
                 <!-- 검색 후에는 주소창에 검색 조건과 키워드가 같이 GET 방식으로 처리되므로 
                 이를 이용해서 <select>태그나 <input>태그의 내용을 수정한다.  -->
-				 <form id='searchForm' action="/board/list" method='get'>
+		<form id='searchForm' action="/board/list" method='get'>
                   <select name='type'>
                     <option value="" 
                       <c:out value="${pageMaker.cri.type == null? 'selected' : '' }"/>>--</option>

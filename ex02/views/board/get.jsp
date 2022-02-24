@@ -47,19 +47,30 @@
                           		<input class="form-control" name='writer' value='<c:out value="${board.writer}"/>' readonly="readonly">
                           		</div>
                           		
+                          	<%-- 페이징 처리 중 조회 페이지에서 다시 목록 페이지로의 이동 시 페이지 번호 유지를 위해 기존 방식 주석 처리 
                           		<!-- 수정 버튼 -->
                           		<button data-oper='modify' class="btn btn-default">
                           		<a href="/board/modify?bno=<c:out value="${board.bno}"/>">
                           		수정</a></button>
+                          		
                           		<!-- 목록 페이지 이동 버튼  -->
                           		<button data-oper='list' class="btn btn-info">
                           		<a href="/board/list">목록으로</a>
-                          		</button>
+                          		</button> --%>
                           		
-                        <!--   		수정과 삭제가 필요한 페이지로 링크 처리를 하기 위해 form 태그 이용 (타입은 hidden)  -->
-                          		<form id='operForm' action="/board/modify" method="get">
-                          			<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno }"/>'>
-                          		</form>
+                          		<button data-oper='modify' class="btn btn-default">수정</button>
+								<button data-oper='list' class="btn btn-info">목록으로</button>
+                          		
+                        <!-- 수정과 삭제가 필요한 페이지로 링크 처리를 하기 위해 form 태그 이용 (타입은 hidden) -->
+                        <!-- 페이징 처리 중 조회 페이지에서 다시 목록 페이지로의 이동 시 페이지 번호 유지를 위해 Criteria 클래스의 변수 pageNum, amount를 추가 -->
+                          <form id='operForm' action="/board/modify" method="get">
+							 <input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
+						     <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+						     <input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
+						<!-- 조회 페이지에서의 다시 목록 페이지로 이동 시 검색 처리 결과 유지를 위해 type과 keyword의 처리를 추가한다.  -->
+		                    <input type='hidden' name='type' value='<c:out value="${cri.type}"/>' />
+		                    <input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>' />
+                          </form>
                           		
                              <!-- 테이블 끝  -->
                             </div>
@@ -77,7 +88,7 @@ $(document).ready(function() {
 	
 /* 	사용자가 수정 버튼을 클릭하면 bno값을 같이 전달하고 <form>태그를 submit시켜서 처리한다.  */
 	
-	$(button[data-oper='modify']).on("click", function(e) {
+	$("button[data-oper='modify']").on("click", function(e) {
 		
 		operForm.attr("action", "/board/modify").submit();
 		
@@ -86,7 +97,7 @@ $(document).ready(function() {
 /* 	사용자가 list로 이동하는 경우에는 아직 아무런 데이터도 필요하지 않으므로 
 	<form>태그 내의 bno태그를 지우고 submit을 통해 리스트 페이지로 이동한다. */
 	
-	$(button[data-oper='list']).on("click", function(e) {
+	$("button[data-oper='list']").on("click", function(e) {
 		
 		operForm.find("#bno").remove();
 		operForm.attr("action", "/board/list");

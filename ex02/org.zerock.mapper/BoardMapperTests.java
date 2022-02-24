@@ -85,6 +85,18 @@ public class BoardMapperTests {
 		List<BoardVO> list = mapper.getListWithPaging(cri);
 		list.forEach(board -> log.info(board));
 	}
+	
+	// 검색 조건 처리 테스트 
+	@Test
+	public void testSearch() {
+		
+		Criteria cri = new Criteria();
+		cri.setKeyword("새글");
+		cri.setType("T");
+		
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		list.forEach(board -> log.info(board));	
+	}
 		
 }
 

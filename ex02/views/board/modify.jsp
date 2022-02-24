@@ -33,10 +33,11 @@
                             	
                             	<!-- 페이징 처리 중 수정 페이지에서 다시 목록 페이지로의 이동 시 페이지 번호 유지를 위해 Criteria 클래스의 변수 pageNum, amount를 추가 -->
                             	<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
-        						<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
-        						<!-- 수정 페이지에서의 다시 목록 페이지로 이동 시 검색 처리 결과 유지를 위해 type과 keyword의 처리를 추가한다.  -->
-		                    	<input type='hidden' name='type' value='<c:out value="${cri.type}"/>' />
-		                    	<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>' />
+        			<input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
+					
+        			<!-- 수정 페이지에서의 다시 목록 페이지로 이동 시 검색 처리 결과 유지를 위해 type과 keyword의 처리를 추가한다.  -->
+		                <input type='hidden' name='type' value='<c:out value="${cri.type}"/>' />
+		                <input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>' />
                             	
                           		<div class="form-group">
                           		<label>#번호</label>

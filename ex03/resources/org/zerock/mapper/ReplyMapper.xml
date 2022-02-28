@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zerock.mapper.ReplyMapper">
+
+<!-- 1. 외래키를 사용하는 등록 작업을 위한 SQL -->
+<insert id="insert">
+  insert into tbl_reply(rno, bno, reply, replyer)
+  values (seq_reply.nextval, #{bno}, #{reply}, #{replyer})
+</insert>
+
+<!-- 2. 댓글 조회 처리를 위한 SQL  -->
+<select id="read" resultType="org.zerock.domain.ReplyVO">
+  select * from tbl_reply where rno = #{rno}
+</select>
+
+<!-- 3. 댓글 삭제 처리를 위한 SQL -->
+<delete id="delete">
+  delete from tbl_reply where rno = #{rno}
+</delete>
+
+<!-- 4. 댓글 수정 처리를 위한 SQL -->
+<update id="update">
+  update tbl_reply set reply = #{reply}, updatedate = sysdate where rno = #{rno}
+</update>
+
+<!-- 5. 특정 게시물의 댓글을 가져오기 위한 SQL -->
+<!-- <select id="getListWithPaging" resultType="org.zerock.domain.ReplyVO">
+  select rno, bno, reply, replyer, replydate, updatedate
+  from tbl_reply
+  where bno = #{bno} #{bno}가 ReplyMapper 인터페이스의 @Param("bno")와 매칭되어서 사용된다. 
+  order by rno asc
+</select> -->
+
+<!-- 6. 댓글 페이징 처리를 위한 SQL -->
+<select id="getListWithPaging" resultType="org.zerock.domain.ReplyVO">
+
+<![CDATA[
+ select  rno, bno, reply, replyer, replydate, updatedate
+ from 
+   (
+    select /*+INDEX(tbl_reply idx_reply) */ 
+      rownum as rn,  rno, bno, reply, replyer, replyDate, updatedate
+    from tbl_reply
+    where bno =  #{bno}
+    and rno > 0
+    and rownum <= #{cri.pageNum} * #{cri.amount}
+   ) where rn > (#{cri.pageNum} -1) * #{cri.amount}
+]]>
+
+</select>
+
+<!-- 게시물 별 댓글 숫자를 파악하는 SQL -->
+<select id="getCountByBno" resultType="int">
+<![CDATA[
+  select count(rno) from tbl_reply where bno = #{bno}
+]]>
+</select>
+
+</mapper>
